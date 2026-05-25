@@ -11,12 +11,13 @@ def main() -> None:
     print(f"Accessing file '{file}'")
 
     try:
-        with open(file, "r") as f:
-            print("---")
-            print()
-            print(f.read())
-            print()
-            print("---")
+        f = open(file, "r")
+        print("---")
+        print()
+        print(f.read())
+        print()
+        print("---")
+        f.close()
     except (FileNotFoundError, PermissionError) as e:
         print(f"Error opening file '{file}': {e}")
 

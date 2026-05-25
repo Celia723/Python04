@@ -4,7 +4,7 @@ from typing import List, Optional
 
 def main() -> Optional[List[str]]:
     if len(sys.argv) != 2:
-        sys.stdout.write("Usage: ft_ancient_text.py <file>\n")
+        sys.stderr.write("ERROR: Usage: ft_ancient_text.py <file>\n")
         return None
 
     filename = sys.argv[1]
@@ -12,14 +12,16 @@ def main() -> Optional[List[str]]:
     sys.stdout.write(f"Accessing file '{filename}'\n")
 
     try:
-        with open(filename, "r") as f:
-            content = f.read()
+        f = open(filename, "r")
+        content = f.read()
+        f.close()
+        sys.stdout.write("---\n")
+        sys.stdout.write(content + "\n")
+        sys.stdout.write("---\n")
+        return content.splitlines()
     except (FileNotFoundError, PermissionError) as e:
-        sys.stderr.write(f"Error opening file '{filename}': {e}\n")
+        sys.stderr.write(f"ERROR: Error opening file '{filename}': {e}\n")
         return None
-
-    sys.stdout.write(content + "\n")
-    return content.splitlines()
 
 
 if __name__ == "__main__":
@@ -37,6 +39,9 @@ if __name__ == "__main__":
         else:
             sys.stdout.write(f"Saving data to: '{new_file}'\n")
             try:
-                with open(new_file, "w") as n:
-                    n.write("\n".join(transformed) + "\n")
-                sys.stdout.write(f"Data saved in file '{new_file
+                n = open(new_file, "w")
+                n.write("\n".join(transformed) + "\n")
+                n.close()
+                sys.stdout.write(f"Data saved in file '{new_file}'\n")
+            except (FileNotFoundError, PermissionError) as e:
+                sys.stderr.write(f"ERROR: Error opening file '{new_file}': {e}\n")

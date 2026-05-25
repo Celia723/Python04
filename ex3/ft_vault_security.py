@@ -6,15 +6,18 @@ def secure_archive(
     action: int = 1,
     content_to_write: str = ""
 ) -> Tuple[bool, str]:
+    content = ""
     try:
         if action == 1:
             with open(file_name, "r") as f:
                 content = f.read()
+            print(f"Archivo '{file_name}' cerrado automaticamente?: {f.closed}")
             return True, content
 
         elif action == 2:
             with open(file_name, "w") as f:
                 f.write(content_to_write)
+            print(f"Archivo '{file_name}' cerrado automaticamente?: {f.closed}")
             return True, "Content successfully written to file"
 
         return False, "Invalid action"
